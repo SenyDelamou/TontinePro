@@ -16,7 +16,7 @@ public class Groupe1 {
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(() -> {
             StyleUtils.configureGlobalAppearance();
-            new SplashScreen(3000); // 3 seconds splash
+            new LoginFrame().setVisible(true);
         });
     }
     
