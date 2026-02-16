@@ -64,8 +64,8 @@ public class ProfilePanel extends JPanel {
         if (DatabaseConnection.OFFLINE_MODE) {
             nameField.setText("Administrateur Système");
             emailField.setText("admin@tontinepro.com");
-            phoneField.setText("+225 0102030405");
-            locField.setText("Abidjan, Côte d'Ivoire");
+            phoneField.setText("+224 624-00-11-22");
+            locField.setText("Conakry, Guinée");
             return;
         }
 

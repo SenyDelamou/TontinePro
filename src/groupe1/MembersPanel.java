@@ -219,21 +219,21 @@ public class MembersPanel extends JPanel {
         if (DatabaseConnection.OFFLINE_MODE) {
             model.setRowCount(0);
             model.addRow(
-                    new Object[] { "M001", "KONE", "Moussa", "0102030405", "Cocody, Abidjan", "150,000 FCFA", "" });
+                    new Object[] { "M001", "KONE", "Moussa", "624-00-11-22", "Kaloum, Conakry", "150,000 GNF", "" });
             model.addRow(
-                    new Object[] { "M002", "TOURE", "Aicha", "0506070809", "Plateau, Abidjan", "200,000 FCFA", "" });
+                    new Object[] { "M002", "TOURE", "Aicha", "620-33-44-55", "Ratoma, Conakry", "200,000 GNF", "" });
             model.addRow(
-                    new Object[] { "M003", "DIALLO", "Alpha", "0708091011", "Yopougon, Abidjan", "75,000 FCFA", "" });
+                    new Object[] { "M003", "DIALLO", "Alpha", "664-55-66-77", "Kankan centre", "75,000 GNF", "" });
             model.addRow(
-                    new Object[] { "M004", "SYLLA", "Fanta", "0147258369", "Adjamé, Abidjan", "320,000 FCFA", "" });
+                    new Object[] { "M004", "SYLLA", "Fanta", "622-88-99-00", "Labé, Guinée", "320,000 GNF", "" });
             model.addRow(
-                    new Object[] { "M005", "TRAORE", "Bakary", "0258147369", "Marcory, Abidjan", "125,000 FCFA", "" });
+                    new Object[] { "M005", "TRAORE", "Bakary", "621-11-22-33", "Nzérékoré", "125,000 GNF", "" });
             return;
         }
 
         String query = "SELECT code_membre, nom, prenoms, telephone, " +
                 "CONCAT(ville, ', ', COALESCE(adresse, '')) as adresse, " +
-                "CONCAT(FORMAT(solde_compte, 0), ' FCFA') as solde, " +
+                "CONCAT(FORMAT(solde_compte, 0), ' GNF') as solde, " +
                 "COALESCE(photo_path, '') as photo " +
                 "FROM Membres WHERE statut = 'ACTIF' ORDER BY id_membre";
 

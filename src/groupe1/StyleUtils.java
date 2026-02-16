@@ -21,6 +21,11 @@ public class StyleUtils {
     public static final Color TEXT_DARK = new Color(33, 37, 41); // Dark/Black
     public static final Color TEXT_GRAY = new Color(108, 117, 125); // Muted Gray
 
+    // App Info
+    public static final String APP_NAME = "TontinePro";
+    public static final String APP_EDITION = "LimtaScore Edition";
+    public static final String APP_VERSION = "v1.5.0";
+
     // Fonts
     public static final Font FONT_TITLE = new Font("Segoe UI", Font.BOLD, 26);
     public static final Font FONT_SUBTITLE = new Font("Segoe UI", Font.PLAIN, 16);

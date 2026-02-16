@@ -27,7 +27,7 @@ public class DashboardPanel extends JPanel {
         // Create cards (we will set values later)
         JPanel membersCard = createPremiumStatCard("Total Membres", "0", "Aujourd'hui", true,
                 StyleUtils.PRIMARY_BLUE, IconUtils.createUsersIcon(32, Color.WHITE), "members");
-        JPanel moneyCard = createPremiumStatCard("Montant Collecté", "0 FCFA", "Total", true,
+        JPanel moneyCard = createPremiumStatCard("Montant Collecté", "0 GNF", "Total", true,
                 StyleUtils.SUCCESS_GREEN, IconUtils.createMoneyIcon(32, Color.WHITE), "money");
         JPanel cyclesCard = createPremiumStatCard("Tontines en cours", "0", "Actives", true,
                 StyleUtils.ACCENT_GOLD, IconUtils.createWalletIcon(32, Color.WHITE), "cycles");
@@ -59,15 +59,15 @@ public class DashboardPanel extends JPanel {
     private void loadStatistics() {
         if (DatabaseConnection.OFFLINE_MODE) {
             AnimationUtils.animateCounter(membersValue, 0, 128, 1500, "");
-            AnimationUtils.animateCounter(moneyValue, 0, 1575000, 1500, " FCFA");
+            AnimationUtils.animateCounter(moneyValue, 0, 1575000, 1500, " GNF");
             AnimationUtils.animateCounter(cyclesValue, 0, 3, 1500, "");
 
             activityModel.setRowCount(0);
-            activityModel.addRow(new Object[] { "16/02/2026", "Moussa Diakité", "COTISATION", "25,000 FCFA" });
-            activityModel.addRow(new Object[] { "15/02/2026", "Awa Touré", "DEPOT", "50,000 FCFA" });
-            activityModel.addRow(new Object[] { "14/02/2026", "Jean Koffi", "COTISATION", "25,000 FCFA" });
-            activityModel.addRow(new Object[] { "13/02/2026", "Sali Ouattara", "RETRAIT", "15,000 FCFA" });
-            activityModel.addRow(new Object[] { "12/02/2026", "Fatou Sylla", "BONUS", "10,000 FCFA" });
+            activityModel.addRow(new Object[] { "16/02/2026", "Abdoulaye Camara", "COTISATION", "25,000 GNF" });
+            activityModel.addRow(new Object[] { "15/02/2026", "Awa Touré", "DEPOT", "50,000 GNF" });
+            activityModel.addRow(new Object[] { "14/02/2026", "Ibrahima Barry", "COTISATION", "25,000 GNF" });
+            activityModel.addRow(new Object[] { "13/02/2026", "Saliou Keïta", "RETRAIT", "15,000 GNF" });
+            activityModel.addRow(new Object[] { "12/02/2026", "Fatou Bangoura", "BONUS", "10,000 GNF" });
             return;
         }
 
@@ -85,7 +85,7 @@ public class DashboardPanel extends JPanel {
             ResultSet rs2 = st2.executeQuery("SELECT SUM(solde_compte) FROM Membres");
             if (rs2.next()) {
                 double total = rs2.getDouble(1);
-                AnimationUtils.animateCounter(moneyValue, 0, (int) total, 1500, " FCFA");
+                AnimationUtils.animateCounter(moneyValue, 0, (int) total, 1500, " GNF");
             }
 
             // 3. Active Cycles
@@ -109,7 +109,7 @@ public class DashboardPanel extends JPanel {
                         new SimpleDateFormat("dd/MM/yyyy").format(rs4.getTimestamp(1)),
                         rs4.getString(2),
                         rs4.getString(3),
-                        String.format("%,.0f FCFA", rs4.getDouble(4))
+                        String.format("%,.0f GNF", rs4.getDouble(4))
                 });
             }
 

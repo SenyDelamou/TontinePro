@@ -272,7 +272,7 @@ En haut du tableau de bord, 3 cartes affichent :
 
 2. **Montant Collecté**
    - Somme totale des dépôts et cotisations
-   - Devise : FCFA
+   - Devise : GNF
    - Icône : 💰
 
 3. **Cycles Actifs**

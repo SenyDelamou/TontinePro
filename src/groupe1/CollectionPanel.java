@@ -68,21 +68,22 @@ public class CollectionPanel extends JPanel {
     private void loadTransactionsFromDatabase() {
         if (DatabaseConnection.OFFLINE_MODE) {
             model.setRowCount(0);
-            model.addRow(new Object[] { "TXN-2026-001", "16/02/2026 14:30", "Moussa KONE", "25,000 FCFA", "COTISATION",
+            model.addRow(
+                    new Object[] { "TXN-2026-001", "16/02/2026 14:30", "Moussa Diakité", "25,000 GNF", "COTISATION",
+                            "ESPECES" });
+            model.addRow(new Object[] { "TXN-2026-002", "15/02/2026 10:15", "Awa Touré", "50,000 GNF", "DEPOT",
                     "MOBILE_MONEY" });
-            model.addRow(new Object[] { "TXN-2026-002", "15/02/2026 10:15", "Aicha TOURE", "50,000 FCFA", "DEPOT",
-                    "ESPECES" });
-            model.addRow(new Object[] { "TXN-2026-003", "14/02/2026 16:45", "Jean-Baptiste KOUASSI", "25,000 FCFA",
-                    "COTISATION", "VIREMENT" });
-            model.addRow(new Object[] { "TXN-2026-004", "13/02/2026 09:20", "Fatoumata DIALLO", "15,000 FCFA",
-                    "RETRAIT", "MOBILE_MONEY" });
-            model.addRow(new Object[] { "TXN-2026-005", "12/02/2026 11:10", "Seydou BAMBA", "10,000 FCFA", "BONUS",
+            model.addRow(new Object[] { "TXN-2026-003", "14/02/2026 16:45", "Abdoulaye Condé", "25,000 GNF",
+                    "COTISATION", "ESPECES" });
+            model.addRow(new Object[] { "TXN-2026-004", "13/02/2026 09:20", "Fatoumata Sow", "15,000 GNF",
+                    "RETRAIT", "ESPECES" });
+            model.addRow(new Object[] { "TXN-2026-005", "12/02/2026 11:10", "Ibrahima Bangoura", "10,000 GNF", "BONUS",
                     "ESPECES" });
             return;
         }
 
         String query = "SELECT t.reference, t.date_transaction, CONCAT(m.nom, ' ', m.prenoms) as membre, " +
-                "CONCAT(FORMAT(t.montant, 0), ' FCFA') as montant, t.type_transaction, t.mode_paiement " +
+                "CONCAT(FORMAT(t.montant, 0), ' GNF') as montant, t.type_transaction, t.mode_paiement " +
                 "FROM Transactions t " +
                 "JOIN Membres m ON t.id_membre = m.id_membre " +
                 "ORDER BY t.date_transaction DESC";

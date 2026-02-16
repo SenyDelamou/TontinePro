@@ -161,7 +161,7 @@ public class ConfigurationPanel extends JPanel {
     private void loadSettingsFromDatabase() {
         if (DatabaseConnection.OFFLINE_MODE) {
             settingFields.get("APP_NAME").setText("TontinePro (Demo)");
-            settingFields.get("DEVISE").setText("FCFA");
+            settingFields.get("DEVISE").setText("GNF");
             settingFields.get("PENALITE_RETARD").setText("500");
             settingFields.get("TAUX_INTERET").setText("2.5");
             return;

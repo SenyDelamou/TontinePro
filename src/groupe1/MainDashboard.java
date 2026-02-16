@@ -24,7 +24,7 @@ public class MainDashboard extends JFrame {
     private String currentActivePage = "Tableau de bord";
 
     public MainDashboard() {
-        setTitle("TontinePro - LimtaScore Edition");
+        setTitle(StyleUtils.APP_NAME + " - " + StyleUtils.APP_EDITION);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1280, 850);
         setLocationRelativeTo(null);
@@ -110,7 +110,7 @@ public class MainDashboard extends JFrame {
 
         // "LimtaScore" Text inside logo (simulated above) or below? Screenshot shows
         // text below.
-        JLabel appLabel = new JLabel("TontinePro", SwingConstants.CENTER);
+        JLabel appLabel = new JLabel(StyleUtils.APP_NAME, SwingConstants.CENTER);
         appLabel.setForeground(Color.WHITE);
         appLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         appLabel.setBounds(0, logoY + 90, 250, 30);
@@ -123,7 +123,7 @@ public class MainDashboard extends JFrame {
         SwingUtilities.invokeLater(() -> navigateTo(currentActivePage));
 
         String[] menuItems = {
-                "Tableau de bord", "Membres", "Collecte", "Compte", "Utilisateur", "Configuration"
+                "Tableau de bord", "Membres", "Collecte", "Prêts", "Compte", "Utilisateur", "Configuration"
         };
 
         int startY = 200;
@@ -248,7 +248,7 @@ public class MainDashboard extends JFrame {
         JLabel msg = new JLabel("Vos billets sont en sécurité avec TontinePro", SwingConstants.CENTER);
         msg.setForeground(Color.GRAY);
 
-        JLabel ver = new JLabel("V 1.0.0.0");
+        JLabel ver = new JLabel(StyleUtils.APP_VERSION);
         ver.setForeground(Color.LIGHT_GRAY);
 
         footer.add(msg, BorderLayout.CENTER);
@@ -280,6 +280,8 @@ public class MainDashboard extends JFrame {
                 return new MembersPanel();
             case "Collecte":
                 return new CollectionPanel();
+            case "Prêts":
+                return new PretPanel();
             case "Compte":
                 return new ComptePanel();
             case "Utilisateur":

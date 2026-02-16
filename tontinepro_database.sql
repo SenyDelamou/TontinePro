@@ -191,7 +191,7 @@ BEGIN
     -- Log de la transaction
     INSERT INTO Mouchard (action, table_concernee, id_enregistrement, details, id_utilisateur)
     VALUES ('INSERT', 'Transactions', NEW.id_transaction,
-            CONCAT('Transaction ', NEW.type_transaction, ': ', NEW.montant, ' FCFA'),
+            CONCAT('Transaction ', NEW.type_transaction, ': ', NEW.montant, ' GNF'),
             NEW.id_utilisateur);
     
     -- Mise à jour du solde du membre
@@ -259,7 +259,7 @@ VALUES ('admin', MD5('admin123'), 'Administrateur Système', 'admin@tontinepro.c
 INSERT INTO Configuration (cle_config, valeur_config, description, type_donnee) VALUES
 ('APP_NAME', 'TontinePro', 'Nom de l\'application', 'STRING'),
 ('APP_VERSION', '1.0.0', 'Version de l\'application', 'STRING'),
-('DEVISE', 'FCFA', 'Devise utilisée', 'STRING'),
+('DEVISE', 'GNF', 'Devise utilisée', 'STRING'),
 ('PENALITE_RETARD', '500', 'Montant de la pénalité de retard', 'NUMBER'),
 ('TAUX_INTERET', '2.5', 'Taux d\'intérêt annuel (%)', 'NUMBER'),
 ('EMAIL_NOTIFICATIONS', 'true', 'Activer les notifications par email', 'BOOLEAN'),
@@ -267,11 +267,11 @@ INSERT INTO Configuration (cle_config, valeur_config, description, type_donnee) 
 
 -- Membres de démonstration
 INSERT INTO Membres (code_membre, nom, prenoms, telephone, adresse, ville, date_adhesion, solde_compte) VALUES
-('M001', 'KONE', 'Moussa', '0102030405', 'Cocody Angré', 'Abidjan', '2026-01-15', 150000.00),
-('M002', 'TOURE', 'Aicha', '0506070809', 'Deux Plateaux', 'Abidjan', '2026-01-20', 200000.00),
-('M003', 'KOUASSI', 'Jean-Baptiste', '0910111213', 'Marcory Zone 4', 'Abidjan', '2026-02-01', 75000.00),
-('M004', 'DIALLO', 'Fatoumata', '0203040506', 'Yopougon', 'Abidjan', '2026-02-05', 120000.00),
-('M005', 'BAMBA', 'Seydou', '0607080910', 'Abobo', 'Abidjan', '2026-02-10', 95000.00);
+('M001', 'CAMARA', 'Abdoulaye', '624-00-11-22', 'Kaloum', 'Conakry', '2026-01-15', 150000.00),
+('M002', 'BANGOURA', 'Aicha', '620-33-44-55', 'Ratoma', 'Conakry', '2026-01-20', 200000.00),
+('M003', 'DIALLO', 'Alpha', '664-55-66-77', 'Kankan Centre', 'Kankan', '2026-02-01', 75000.00),
+('M004', 'SOW', 'Fatoumata', '622-88-99-00', 'Labé Centre', 'Labé', '2026-02-05', 120000.00),
+('M005', 'BARRY', 'Seydou', '621-11-22-33', 'Nzérékoré Centre', 'Nzérékoré', '2026-02-10', 95000.00);
 
 -- Cycle de démonstration
 INSERT INTO Cycles (nom_cycle, description, date_debut, date_fin, montant_cotisation, frequence, statut) VALUES

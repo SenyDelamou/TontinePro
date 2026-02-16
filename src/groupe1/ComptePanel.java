@@ -59,11 +59,11 @@ public class ComptePanel extends JPanel {
     private void loadComptesFromDatabase() {
         if (DatabaseConnection.OFFLINE_MODE) {
             model.setRowCount(0);
-            model.addRow(new Object[] { "M001", "Moussa KONE", "150,000 FCFA", "15/01/2026", "ACTIF" });
-            model.addRow(new Object[] { "M002", "Aicha TOURE", "200,000 FCFA", "20/01/2026", "ACTIF" });
-            model.addRow(new Object[] { "M003", "Jean-Baptiste KOUASSI", "75,000 FCFA", "01/02/2026", "ACTIF" });
-            model.addRow(new Object[] { "M004", "Fatoumata DIALLO", "120,000 FCFA", "05/02/2026", "ACTIF" });
-            model.addRow(new Object[] { "M005", "Seydou BAMBA", "95,000 FCFA", "10/02/2026", "ACTIF" });
+            model.addRow(new Object[] { "M001", "Moussa Camara", "150,000 GNF", "15/01/2026", "ACTIF" });
+            model.addRow(new Object[] { "M002", "Aicha Bangoura", "200,000 GNF", "20/01/2026", "ACTIF" });
+            model.addRow(new Object[] { "M003", "Alpha Diallo", "75,000 GNF", "01/02/2026", "ACTIF" });
+            model.addRow(new Object[] { "M004", "Fatoumata Sow", "120,000 GNF", "05/02/2026", "ACTIF" });
+            model.addRow(new Object[] { "M005", "Seydou Barry", "95,000 GNF", "10/02/2026", "ACTIF" });
             return;
         }
 
@@ -77,7 +77,7 @@ public class ComptePanel extends JPanel {
                 model.addRow(new Object[] {
                         rs.getString("code_membre"),
                         rs.getString("adherent"),
-                        String.format("%,.0f FCFA", rs.getDouble("solde_compte")),
+                        String.format("%,.0f GNF", rs.getDouble("solde_compte")),
                         new SimpleDateFormat("dd/MM/yyyy").format(rs.getDate("date_adhesion")),
                         rs.getString("statut")
                 });
