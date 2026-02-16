@@ -198,6 +198,15 @@ public class StyleUtils {
         return field;
     }
 
+    public static JPasswordField createModernPasswordField() {
+        JPasswordField field = new JPasswordField();
+        field.setFont(FONT_BODY);
+        field.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(209, 213, 219), 1, true),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+        return field;
+    }
+
     // ========== PREMIUM ADDITIONS ==========
 
     /**
