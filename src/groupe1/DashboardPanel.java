@@ -57,6 +57,20 @@ public class DashboardPanel extends JPanel {
     }
 
     private void loadStatistics() {
+        if (DatabaseConnection.OFFLINE_MODE) {
+            AnimationUtils.animateCounter(membersValue, 0, 128, 1500, "");
+            AnimationUtils.animateCounter(moneyValue, 0, 1575000, 1500, " FCFA");
+            AnimationUtils.animateCounter(cyclesValue, 0, 3, 1500, "");
+
+            activityModel.setRowCount(0);
+            activityModel.addRow(new Object[] { "16/02/2026", "Moussa Diakité", "COTISATION", "25,000 FCFA" });
+            activityModel.addRow(new Object[] { "15/02/2026", "Awa Touré", "DEPOT", "50,000 FCFA" });
+            activityModel.addRow(new Object[] { "14/02/2026", "Jean Koffi", "COTISATION", "25,000 FCFA" });
+            activityModel.addRow(new Object[] { "13/02/2026", "Sali Ouattara", "RETRAIT", "15,000 FCFA" });
+            activityModel.addRow(new Object[] { "12/02/2026", "Fatou Sylla", "BONUS", "10,000 FCFA" });
+            return;
+        }
+
         try (Connection conn = DatabaseConnection.getConnection()) {
             // 1. Members Count
             Statement st1 = conn.createStatement();

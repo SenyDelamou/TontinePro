@@ -1,6 +1,6 @@
-# Guide d'Utilisation - TontinePro
+# Guide d'Utilisation - TontinePro (LimtaScore Edition)
 
-**Version** : 1.0  
+**Version** : 1.2 (Stable)  
 **Date** : 16 Février 2026  
 **Public** : Administrateurs, Gestionnaires, Opérateurs
 

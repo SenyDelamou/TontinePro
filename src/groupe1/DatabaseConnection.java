@@ -9,6 +9,9 @@ public class DatabaseConnection {
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
+    // Mode Hors-ligne (DÉMO)
+    public static final boolean OFFLINE_MODE = true;
+
     // Instance unique (Singleton)
     private static Connection connection = null;
 
@@ -16,6 +19,8 @@ public class DatabaseConnection {
      * Obtenir la connexion à la base de données
      */
     public static Connection getConnection() {
+        if (OFFLINE_MODE)
+            return null;
         try {
             if (connection == null || connection.isClosed()) {
                 // Charger le driver MySQL

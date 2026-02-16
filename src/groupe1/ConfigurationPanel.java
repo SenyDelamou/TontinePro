@@ -133,6 +133,14 @@ public class ConfigurationPanel extends JPanel {
     }
 
     private void loadCyclesFromDatabase() {
+        if (DatabaseConnection.OFFLINE_MODE) {
+            cycleModel.setRowCount(0);
+            cycleModel.addRow(new Object[] { 1, "Cycle Janvier-Juin 2026", "2026-01-01", "2026-06-30", "EN_COURS" });
+            cycleModel
+                    .addRow(new Object[] { 2, "Cycle Juillet-Décembre 2026", "2026-07-01", "2026-12-31", "PLANIFIE" });
+            return;
+        }
+
         String query = "SELECT id_cycle, nom_cycle, date_debut, date_fin, statut FROM Cycles";
         try (Connection conn = DatabaseConnection.getConnection();
                 Statement stmt = conn.createStatement();
@@ -151,6 +159,14 @@ public class ConfigurationPanel extends JPanel {
     }
 
     private void loadSettingsFromDatabase() {
+        if (DatabaseConnection.OFFLINE_MODE) {
+            settingFields.get("APP_NAME").setText("TontinePro (Demo)");
+            settingFields.get("DEVISE").setText("FCFA");
+            settingFields.get("PENALITE_RETARD").setText("500");
+            settingFields.get("TAUX_INTERET").setText("2.5");
+            return;
+        }
+
         String query = "SELECT cle_config, valeur_config FROM Configuration";
         try (Connection conn = DatabaseConnection.getConnection();
                 Statement stmt = conn.createStatement();

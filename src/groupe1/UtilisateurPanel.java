@@ -67,6 +67,14 @@ public class UtilisateurPanel extends JPanel {
     }
 
     private void loadUsersFromDatabase() {
+        if (DatabaseConnection.OFFLINE_MODE) {
+            model.setRowCount(0);
+            model.addRow(new Object[] { 1, "Administrateur Système", "admin", "ADMIN", "ACTIF", "Aujourd'hui" });
+            model.addRow(new Object[] { 2, "Gestionnaire Principal", "gestion", "GESTIONNAIRE", "ACTIF", "Hier" });
+            model.addRow(new Object[] { 3, "Opérateur 01", "op01", "OPERATEUR", "ACTIF", "14/02/2026" });
+            return;
+        }
+
         String query = "SELECT id_utilisateur, nom_complet, nom_utilisateur, role, statut, derniere_connexion FROM Utilisateurs";
         try (Connection conn = DatabaseConnection.getConnection();
                 Statement stmt = conn.createStatement();

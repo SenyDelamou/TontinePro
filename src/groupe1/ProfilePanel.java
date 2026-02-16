@@ -61,20 +61,33 @@ public class ProfilePanel extends JPanel {
     }
 
     private void loadUserData() {
-        String query = "SELECT nom_complet, email FROM Utilisateurs WHERE id_utilisateur = 1";
+        if (DatabaseConnection.OFFLINE_MODE) {
+            nameField.setText("Administrateur Système");
+            emailField.setText("admin@tontinepro.com");
+            phoneField.setText("+225 0102030405");
+            locField.setText("Abidjan, Côte d'Ivoire");
+            return;
+        }
+
+        String sql = "SELECT nom_complet, email FROM Utilisateurs WHERE id_utilisateur = 1";
         try (Connection conn = DatabaseConnection.getConnection();
                 Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(query)) {
+                ResultSet rs = stmt.executeQuery(sql)) {
             if (rs.next()) {
                 nameField.setText(rs.getString("nom_complet"));
                 emailField.setText(rs.getString("email"));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     private void saveUserData() {
+        if (DatabaseConnection.OFFLINE_MODE) {
+            Toast.show(this, "Profil simulé mis à jour !", Toast.Type.SUCCESS);
+            return;
+        }
+
         String sql = "UPDATE Utilisateurs SET nom_complet = ?, email = ? WHERE id_utilisateur = 1";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {

@@ -216,6 +216,21 @@ public class MembersPanel extends JPanel {
      * Charger les membres depuis la base de données
      */
     private void loadMembersFromDatabase() {
+        if (DatabaseConnection.OFFLINE_MODE) {
+            model.setRowCount(0);
+            model.addRow(
+                    new Object[] { "M001", "KONE", "Moussa", "0102030405", "Cocody, Abidjan", "150,000 FCFA", "" });
+            model.addRow(
+                    new Object[] { "M002", "TOURE", "Aicha", "0506070809", "Plateau, Abidjan", "200,000 FCFA", "" });
+            model.addRow(
+                    new Object[] { "M003", "DIALLO", "Alpha", "0708091011", "Yopougon, Abidjan", "75,000 FCFA", "" });
+            model.addRow(
+                    new Object[] { "M004", "SYLLA", "Fanta", "0147258369", "Adjamé, Abidjan", "320,000 FCFA", "" });
+            model.addRow(
+                    new Object[] { "M005", "TRAORE", "Bakary", "0258147369", "Marcory, Abidjan", "125,000 FCFA", "" });
+            return;
+        }
+
         String query = "SELECT code_membre, nom, prenoms, telephone, " +
                 "CONCAT(ville, ', ', COALESCE(adresse, '')) as adresse, " +
                 "CONCAT(FORMAT(solde_compte, 0), ' FCFA') as solde, " +

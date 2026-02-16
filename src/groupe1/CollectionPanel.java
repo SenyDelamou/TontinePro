@@ -66,6 +66,21 @@ public class CollectionPanel extends JPanel {
     }
 
     private void loadTransactionsFromDatabase() {
+        if (DatabaseConnection.OFFLINE_MODE) {
+            model.setRowCount(0);
+            model.addRow(new Object[] { "TXN-2026-001", "16/02/2026 14:30", "Moussa KONE", "25,000 FCFA", "COTISATION",
+                    "MOBILE_MONEY" });
+            model.addRow(new Object[] { "TXN-2026-002", "15/02/2026 10:15", "Aicha TOURE", "50,000 FCFA", "DEPOT",
+                    "ESPECES" });
+            model.addRow(new Object[] { "TXN-2026-003", "14/02/2026 16:45", "Jean-Baptiste KOUASSI", "25,000 FCFA",
+                    "COTISATION", "VIREMENT" });
+            model.addRow(new Object[] { "TXN-2026-004", "13/02/2026 09:20", "Fatoumata DIALLO", "15,000 FCFA",
+                    "RETRAIT", "MOBILE_MONEY" });
+            model.addRow(new Object[] { "TXN-2026-005", "12/02/2026 11:10", "Seydou BAMBA", "10,000 FCFA", "BONUS",
+                    "ESPECES" });
+            return;
+        }
+
         String query = "SELECT t.reference, t.date_transaction, CONCAT(m.nom, ' ', m.prenoms) as membre, " +
                 "CONCAT(FORMAT(t.montant, 0), ' FCFA') as montant, t.type_transaction, t.mode_paiement " +
                 "FROM Transactions t " +
@@ -102,7 +117,7 @@ public class CollectionPanel extends JPanel {
         // l'instant
         JTextField codeMembreField = StyleUtils.createModernTextField();
         JTextField montantField = StyleUtils.createModernTextField();
-        JComboBox<String> typeCombo = new JComboBox<>(new String[] { "DEPOT", "RETRAIT" });
+        JComboBox<String> typeCombo = new JComboBox<>(new String[] { "DEPOT", "RETRAIT", "PENALITE", "COTISATION" });
         typeCombo.setFont(StyleUtils.FONT_BODY);
         JComboBox<String> modeCombo = new JComboBox<>(new String[] { "ESPECES", "MOBILE_MONEY", "VIREMENT" });
         modeCombo.setFont(StyleUtils.FONT_BODY);
@@ -145,6 +160,11 @@ public class CollectionPanel extends JPanel {
     }
 
     private void saveTransactionToDatabase(String codeMembre, String type, String mode, double montant) {
+        if (DatabaseConnection.OFFLINE_MODE) {
+            Toast.show(this, "Transaction simulée réussie !", Toast.Type.SUCCESS);
+            return;
+        }
+
         // 1. Trouver l'ID du membre à partir du code
         int idMembre = -1;
         String findMember = "SELECT id_membre FROM Membres WHERE code_membre = ?";

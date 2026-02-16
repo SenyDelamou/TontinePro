@@ -157,6 +157,13 @@ public class LoginFrame extends JFrame {
             return;
         }
 
+        // Mode Hors-ligne : Toujours autoriser l'accès
+        if (DatabaseConnection.OFFLINE_MODE) {
+            new MainDashboard().setVisible(true);
+            this.dispose();
+            return;
+        }
+
         String query = "SELECT id_utilisateur, role FROM Utilisateurs WHERE nom_utilisateur = ? AND mot_de_passe = ?";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(query)) {

@@ -57,6 +57,16 @@ public class ComptePanel extends JPanel {
     }
 
     private void loadComptesFromDatabase() {
+        if (DatabaseConnection.OFFLINE_MODE) {
+            model.setRowCount(0);
+            model.addRow(new Object[] { "M001", "Moussa KONE", "150,000 FCFA", "15/01/2026", "ACTIF" });
+            model.addRow(new Object[] { "M002", "Aicha TOURE", "200,000 FCFA", "20/01/2026", "ACTIF" });
+            model.addRow(new Object[] { "M003", "Jean-Baptiste KOUASSI", "75,000 FCFA", "01/02/2026", "ACTIF" });
+            model.addRow(new Object[] { "M004", "Fatoumata DIALLO", "120,000 FCFA", "05/02/2026", "ACTIF" });
+            model.addRow(new Object[] { "M005", "Seydou BAMBA", "95,000 FCFA", "10/02/2026", "ACTIF" });
+            return;
+        }
+
         String query = "SELECT code_membre, CONCAT(nom, ' ', prenoms) as adherent, solde_compte, date_adhesion, statut FROM Membres";
         try (Connection conn = DatabaseConnection.getConnection();
                 Statement stmt = conn.createStatement();
