@@ -31,7 +31,7 @@ public class MembersPanel extends JPanel {
         JButton editButton = StyleUtils.createModernButton("Modifier", StyleUtils.ACCENT_GOLD);
         JButton deleteButton = StyleUtils.createModernButton("Supprimer", StyleUtils.DANGER_RED);
         
-        // Listeners (Keeping existing logic logic)
+        // Listeners
         addButton.addActionListener(e -> showMemberDialog("Ajouter un membre", null));
         editButton.addActionListener(e -> editMember());
         deleteButton.addActionListener(e -> deleteMember());
@@ -45,6 +45,10 @@ public class MembersPanel extends JPanel {
         exportButton.addActionListener(e -> DataExporter.exportToCSV(table, this));
         buttonPanel.add(exportButton);
         
+        JButton cardButton = StyleUtils.createModernButton("Carte ID", StyleUtils.PRIMARY_BLUE.brighter());
+        cardButton.addActionListener(e -> generateCard());
+        buttonPanel.add(cardButton);
+        
         topPanel.add(buttonPanel, BorderLayout.EAST);
         
         add(topPanel, BorderLayout.NORTH);
@@ -54,16 +58,22 @@ public class MembersPanel extends JPanel {
         tablePanel.setBackground(Color.WHITE);
         tablePanel.setBorder(BorderFactory.createLineBorder(new Color(229, 231, 235), 1));
         
-        String[] columnNames = {"ID", "Nom", "Prénoms", "Téléphone", "Adresse", "Solde"};
+        // Added "Photo" column (Index 6)
+        String[] columnNames = {"ID", "Nom", "Prénoms", "Téléphone", "Adresse", "Solde", "Photo"};
         Object[][] data = {
-            {"M001", "KONE", "Moussa", "01020304", "Abidjan", "150 000 FCFA"},
-            {"M002", "TOURE", "Aicha", "05060708", "Bouaké", "200 000 FCFA"},
-            {"M003", "KOUASSI", "Jean", "09101112", "Yamoussoukro", "75 000 FCFA"}
+            {"M001", "KONE", "Moussa", "01020304", "Abidjan", "150 000 FCFA", ""},
+            {"M002", "TOURE", "Aicha", "05060708", "Bouaké", "200 000 FCFA", ""},
+            {"M003", "KOUASSI", "Jean", "09101112", "Yamoussoukro", "75 000 FCFA", ""}
         };
         
         model = new DefaultTableModel(data, columnNames);
         table = new JTable(model);
         StyleUtils.styleTable(table);
+        
+        // Hide Photo Column
+        table.getColumnModel().getColumn(6).setMinWidth(0);
+        table.getColumnModel().getColumn(6).setMaxWidth(0);
+        table.getColumnModel().getColumn(6).setWidth(0);
         
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(null);
@@ -74,6 +84,24 @@ public class MembersPanel extends JPanel {
         add(tablePanel, BorderLayout.CENTER);
     }
     
+    private void generateCard() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow == -1) {
+            Toast.show(this, "Sélectionnez un membre pour générer sa carte.", Toast.Type.INFO);
+            return;
+        }
+        
+        String id = model.getValueAt(selectedRow, 0).toString();
+        String name = model.getValueAt(selectedRow, 1) + " " + model.getValueAt(selectedRow, 2);
+        String phone = model.getValueAt(selectedRow, 3).toString();
+        String address = model.getValueAt(selectedRow, 4).toString();
+        String photo = model.getValueAt(selectedRow, 6).toString(); // Hidden column
+        
+        CardGenerator.generateCard(this, name, id, phone, address, photo);
+    }
+    
+    // ... editMember and deleteMember ...
+
     private void editMember() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow == -1) {
@@ -101,7 +129,7 @@ public class MembersPanel extends JPanel {
     }
 
     private void showMemberDialog(String title, Object[] existingData) {
-        JDialog dialog = DialogUtils.createDialog(this, title, 450, 550);
+        JDialog dialog = DialogUtils.createDialog(this, title, 500, 600);
 
         JPanel formPanel = DialogUtils.createFormPanel();
 
@@ -110,16 +138,33 @@ public class MembersPanel extends JPanel {
         JTextField telField = StyleUtils.createModernTextField();
         JTextField adresseField = StyleUtils.createModernTextField();
         
+        // Photo Field
+        JPanel photoPanel = new JPanel(new BorderLayout(5, 0));
+        photoPanel.setOpaque(false);
+        JTextField photoPathField = StyleUtils.createModernTextField();
+        photoPathField.setEditable(false);
+        JButton browseBtn = new JButton("...");
+        browseBtn.addActionListener(e -> {
+            JFileChooser fc = new JFileChooser();
+            if (fc.showOpenDialog(dialog) == JFileChooser.APPROVE_OPTION) {
+                photoPathField.setText(fc.getSelectedFile().getAbsolutePath());
+            }
+        });
+        photoPanel.add(photoPathField, BorderLayout.CENTER);
+        photoPanel.add(browseBtn, BorderLayout.EAST);
+        
         DialogUtils.addFormField(formPanel, "Nom", nomField, 0);
         DialogUtils.addFormField(formPanel, "Prénoms", prenomField, 1);
         DialogUtils.addFormField(formPanel, "Téléphone", telField, 2);
         DialogUtils.addFormField(formPanel, "Adresse", adresseField, 3);
+        DialogUtils.addFormField(formPanel, "Photo", photoPanel, 4);
 
         if (existingData != null) {
             nomField.setText(existingData[1].toString());
             prenomField.setText(existingData[2].toString());
             telField.setText(existingData[3].toString());
             adresseField.setText(existingData[4].toString());
+            if (existingData[6] != null) photoPathField.setText(existingData[6].toString());
         }
 
         dialog.add(formPanel, BorderLayout.CENTER);
@@ -134,7 +179,7 @@ public class MembersPanel extends JPanel {
         saveButton.addActionListener(e -> {
             if (existingData == null) {
                 String newId = "M" + String.format("%03d", model.getRowCount() + 1);
-                model.addRow(new Object[]{newId, nomField.getText(), prenomField.getText(), telField.getText(), adresseField.getText(), "0 FCFA"});
+                model.addRow(new Object[]{newId, nomField.getText(), prenomField.getText(), telField.getText(), adresseField.getText(), "0 FCFA", photoPathField.getText()});
                 Toast.show(this, "Membre ajouté avec succès !", Toast.Type.SUCCESS);
             } else {
                 int selectedRow = table.getSelectedRow();
@@ -142,6 +187,7 @@ public class MembersPanel extends JPanel {
                 model.setValueAt(prenomField.getText(), selectedRow, 2);
                 model.setValueAt(telField.getText(), selectedRow, 3);
                 model.setValueAt(adresseField.getText(), selectedRow, 4);
+                model.setValueAt(photoPathField.getText(), selectedRow, 6);
                 Toast.show(this, "Membre modifié avec succès.", Toast.Type.SUCCESS);
             }
             dialog.dispose();

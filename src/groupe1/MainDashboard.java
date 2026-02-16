@@ -13,114 +13,42 @@ import java.util.List;
 public class MainDashboard extends JFrame {
 
     // Redesign Colors based on screenshot
-    private static final Color SIDEBAR_BG = new Color(28, 45, 90); // Deep Navy Blue
-    private static final Color BUTTON_ORANGE = new Color(200, 80, 10); // Burnt Orange
-    private static final Color HEADER_BG = new Color(220, 220, 220); // Light Grey
-    private static final Color FOOTER_BG = new Color(220, 220, 220); // Light Grey
-
+    // Colors are now handled by StyleUtils
+    
     private JPanel contentPanel;
     private CardLayout cardLayout;
     private List<JButton> menuButtons = new ArrayList<>();
     private String currentActivePage = "Tableau de bord";
     
-    // Chat Components
-    private ChatPanel chatPanel;
-    private JButton chatFab;
-    private boolean isChatOpen = false;
-
     public MainDashboard() {
         setTitle("TontinePro - LimtaScore Edition");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1280, 850);
         setLocationRelativeTo(null);
-        
-        // Use JLayeredPane for Floating Elements
-        JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setLayout(null); // Absolute positioning for layers
-        setContentPane(layeredPane);
+        setLayout(new BorderLayout());
 
-        // --- Layer 0: Main Application ---
-        JPanel mainContainer = new JPanel(new BorderLayout());
-        mainContainer.setBounds(0, 0, 1280, 850); // Initial bounds
-        
         // Initialize Layouts
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
         contentPanel.setBackground(Color.WHITE);
 
         // Sidebar
-        mainContainer.add(createSidebar(), BorderLayout.WEST);
+        add(createSidebar(), BorderLayout.WEST);
         
-        // Content Area (Header + Content + Footer)
-        JPanel centerContainer = new JPanel(new BorderLayout());
-        centerContainer.add(createHeader(), BorderLayout.NORTH);
+        // Main Content Area (Header + Content + Footer)
+        JPanel mainContainer = new JPanel(new BorderLayout());
+        mainContainer.add(createHeader(), BorderLayout.NORTH);
         
+        // Content wrapper
         JPanel centerWrapper = new JPanel(new BorderLayout());
         centerWrapper.setBackground(Color.WHITE);
         centerWrapper.add(contentPanel, BorderLayout.CENTER);
-        centerContainer.add(centerWrapper, BorderLayout.CENTER);
+        mainContainer.add(centerWrapper, BorderLayout.CENTER);
         
-        centerContainer.add(createFooter(), BorderLayout.SOUTH);
+        // Footer
+        mainContainer.add(createFooter(), BorderLayout.SOUTH);
         
-        mainContainer.add(centerContainer, BorderLayout.CENTER);
-        
-        layeredPane.add(mainContainer, JLayeredPane.DEFAULT_LAYER);
-        
-        // --- Layer 100: Chat Floating Action Button (FAB) ---
-        chatFab = new JButton("Chat"); // Icon would be better, using text for reliability
-        chatFab.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        chatFab.setBackground(StyleUtils.PRIMARY_BLUE);
-        chatFab.setForeground(Color.WHITE);
-        chatFab.setFocusPainted(false);
-        chatFab.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
-        chatFab.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
-        // Circular FAB simple simulation styling
-        chatFab.addActionListener(e -> toggleChat());
-        
-        layeredPane.add(chatFab, JLayeredPane.PALETTE_LAYER);
-        
-        // --- Layer 101: Chat Window ---
-        chatPanel = new ChatPanel();
-        chatPanel.setVisible(false);
-        layeredPane.add(chatPanel, JLayeredPane.MODAL_LAYER);
-
-        // Resize Listener to keep everything in place
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                int w = getWidth();
-                int h = getHeight();
-                
-                // Main Container fills screen
-                mainContainer.setBounds(0, 0, w, h);
-                
-                // FAB Position (Bottom Right)
-                int fabSize = 60;
-                int fabX = w - fabSize - 30;
-                int fabY = h - fabSize - 50;
-                chatFab.setBounds(fabX, fabY, fabSize, fabSize);
-                
-                // Chat Window Position (Above FAB)
-                int chatW = 320;
-                int chatH = 450;
-                int chatX = fabX - chatW + fabSize;
-                int chatY = fabY - chatH - 10;
-                chatPanel.setBounds(chatX, chatY, chatW, chatH);
-            }
-        });
-    }
-    
-    private void toggleChat() {
-        isChatOpen = !isChatOpen;
-        chatPanel.setVisible(isChatOpen);
-        if (isChatOpen) {
-            chatFab.setText("X");
-            chatFab.setBackground(StyleUtils.DANGER_RED);
-        } else {
-            chatFab.setText("Chat");
-            chatFab.setBackground(StyleUtils.PRIMARY_BLUE);
-        }
+        add(mainContainer, BorderLayout.CENTER);
     }
 
     private JPanel createSidebar() {
@@ -128,7 +56,7 @@ public class MainDashboard extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.setColor(SIDEBAR_BG);
+                g.setColor(StyleUtils.PRIMARY_BLUE);
                 g.fillRect(0, 0, getWidth(), getHeight());
                 
                 // Draw white arrow for active item
@@ -213,7 +141,7 @@ public class MainDashboard extends JFrame {
     }
 
     private JButton createOrangeButton(String text) {
-        JButton btn = StyleUtils.createModernButton(text, BUTTON_ORANGE);
+        JButton btn = StyleUtils.createModernButton(text, StyleUtils.ACCENT_ORANGE);
         btn.setFont(new Font("Segoe UI", Font.BOLD, 16));
         btn.setForeground(Color.WHITE);
         
@@ -234,7 +162,7 @@ public class MainDashboard extends JFrame {
 
     private JPanel createHeader() {
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(HEADER_BG);
+        header.setBackground(StyleUtils.BG_LIGHT);
         header.setPreferredSize(new Dimension(0, 60));
         header.setBorder(new EmptyBorder(0, 20, 0, 20));
 
@@ -312,7 +240,7 @@ public class MainDashboard extends JFrame {
     
     private JPanel createFooter() {
         JPanel footer = new JPanel(new BorderLayout());
-        footer.setBackground(FOOTER_BG);
+        footer.setBackground(StyleUtils.BG_LIGHT);
         footer.setPreferredSize(new Dimension(0, 40));
         footer.setBorder(new EmptyBorder(0, 20, 0, 20));
         

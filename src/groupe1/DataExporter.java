@@ -2,6 +2,7 @@ package groupe1;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
+import java.awt.Component;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

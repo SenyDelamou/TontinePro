@@ -26,8 +26,13 @@ public class DashboardPanel extends JPanel {
         JPanel contentSplit = new JPanel(new GridLayout(2, 1, 0, 20));
         contentSplit.setOpaque(false);
 
-        // 1. Chart Section
-        contentSplit.add(new EvolutionChartPanel());
+        // 1. Chart Section (2 Columns)
+        JPanel chartsPanel = new JPanel(new GridLayout(1, 2, 20, 0));
+        chartsPanel.setOpaque(false);
+        chartsPanel.add(new EvolutionChartPanel());
+        chartsPanel.add(new PieChartPanel());
+        
+        contentSplit.add(chartsPanel);
 
         // 2. Recent Activity Section
         JPanel activityPanel = new JPanel(new BorderLayout());

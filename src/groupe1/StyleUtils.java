@@ -10,17 +10,19 @@ import java.awt.event.MouseEvent;
 
 public class StyleUtils {
     
-    // Premium Color Palette
-    public static final Color PRIMARY_BLUE = new Color(26, 35, 126);   // Deep Indigo/Navy
-    public static final Color ACCENT_GOLD = new Color(245, 158, 11);  // Vibrant Amber
+    // Premium Color Palette (Harmonized)
+    public static final Color PRIMARY_BLUE = new Color(28, 45, 90);    // Deep Navy (Sidebar/Header)
+    public static final Color ACCENT_ORANGE = new Color(220, 80, 10);  // Vibrant Orange (Buttons/Highlights)
+    public static final Color ACCENT_GOLD = new Color(245, 158, 11);   // Gold (Secondary Accent)
     public static final Color SUCCESS_GREEN = new Color(16, 185, 129); // Emerald
-    public static final Color DANGER_RED = new Color(220, 38, 38);    // Red
-    public static final Color BG_LIGHT = new Color(243, 244, 246);    // Soft Cloud
-    public static final Color TEXT_DARK = new Color(31, 41, 55);      // Charcoal
-    public static final Color TEXT_GRAY = new Color(107, 114, 128);   // Cool Gray
+    public static final Color DANGER_RED = new Color(220, 38, 38);     // Red
+    
+    public static final Color BG_LIGHT = new Color(248, 249, 250);     // Very Soft Gray (Dashboard BG)
+    public static final Color TEXT_DARK = new Color(33, 37, 41);       // Dark/Black
+    public static final Color TEXT_GRAY = new Color(108, 117, 125);    // Muted Gray
 
     // Fonts
-    public static final Font FONT_TITLE = new Font("Segoe UI", Font.BOLD, 28);
+    public static final Font FONT_TITLE = new Font("Segoe UI", Font.BOLD, 26);
     public static final Font FONT_SUBTITLE = new Font("Segoe UI", Font.PLAIN, 16);
     public static final Font FONT_BODY = new Font("Segoe UI", Font.PLAIN, 14);
     public static final Font FONT_BOLD = new Font("Segoe UI", Font.BOLD, 14);
