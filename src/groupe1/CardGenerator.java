@@ -53,11 +53,16 @@ public class CardGenerator {
         g2.drawString("TontinePro", 40, 85);
 
         // === CARD TITLE (Refined Badge style) ===
-        g2.setColor(new Color(245, 158, 11, 40));
-        g2.fillRoundRect(220, 35, 180, 40, 10, 10);
-        g2.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        int badgeW = 160;
+        int badgeH = 32;
+        int badgeX = 130; // Moved left to avoid photo overlap
+        int badgeY = 40;
+
+        g2.setColor(new Color(245, 158, 11, 30));
+        g2.fillRoundRect(badgeX, badgeY, badgeW, badgeH, 8, 8);
+        g2.setFont(new Font("Segoe UI", Font.BOLD, 14));
         g2.setColor(new Color(245, 158, 11)); // Gold
-        g2.drawString("MEMBRE OFFICIEL", 235, 62);
+        g2.drawString("MEMBRE OFFICIEL", badgeX + 18, badgeY + 21);
 
         // === MEMBER PHOTO (Top Right) ===
         int photoSize = 120;
@@ -88,19 +93,19 @@ public class CardGenerator {
 
         // === MEMBER INFO (Main Area) ===
         int detailsX = 40;
-        int detailsY = 160;
+        int detailsY = 145; // Moved slightly up
 
         // Name Label & Value
-        g2.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        g2.setColor(new Color(255, 255, 255, 120));
+        g2.setFont(new Font("Segoe UI", Font.BOLD, 10));
+        g2.setColor(new Color(255, 255, 255, 100));
         g2.drawString("NOM DU TITULAIRE", detailsX, detailsY);
 
-        g2.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        g2.setFont(new Font("Segoe UI", Font.BOLD, 26)); // Slightly smaller font for better fit
         g2.setColor(Color.WHITE);
-        g2.drawString(name.toUpperCase(), detailsX, detailsY + 35);
+        g2.drawString(name.toUpperCase(), detailsX, detailsY + 30);
 
-        // ID & Phone side by side
-        detailsY += 80;
+        // ID & Contact Side by Side
+        detailsY += 75;
 
         // ID Block
         g2.setFont(new Font("Segoe UI", Font.BOLD, 11));
