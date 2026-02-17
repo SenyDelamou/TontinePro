@@ -123,7 +123,7 @@ public class MainDashboard extends JFrame {
         SwingUtilities.invokeLater(() -> navigateTo(currentActivePage));
 
         String[] menuItems = {
-                "Tableau de bord", "Membres", "Collecte", "Prêts", "Compte", "Utilisateur", "Configuration"
+                "Tableau de bord", "Membres", "Collecte", "Prêts", "Compte", "Utilisateur", "Configuration", "Architecture"
         };
 
         int startY = 200;
@@ -290,6 +290,8 @@ public class MainDashboard extends JFrame {
                 return new ConfigurationPanel();
             case "Profil":
                 return new ProfilePanel();
+            case "Architecture":
+                return new DiagramsPanel();
             default:
                 return null;
         }
